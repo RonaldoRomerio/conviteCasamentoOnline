@@ -1,0 +1,19 @@
+{
+  "name": "convitecasamentoonline",
+  "version": "1.0.0",
+  "description": "plataforma para geracao e envio de convites de casamento personalizado",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RonaldoRomerio/conviteCasamentoOnline.git"
+  },
+  "author": "Ronaldo Romerio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RonaldoRomerio/conviteCasamentoOnline/issues"
+  },
+  "homepage": "https://github.com/RonaldoRomerio/conviteCasamentoOnline#readme"
+}
