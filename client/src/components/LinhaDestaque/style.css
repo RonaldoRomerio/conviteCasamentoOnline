@@ -1,0 +1,16 @@
+.layoutDestaque {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.layoutDestaque P{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.linhaDestaque{
+    height: 2px;
+    flex-grow: 1;
+    background-image: linear-gradient(270deg, #7c5d00 0, #b29200 25%, #edcf0c 50%, #b29200 75%, #7c5d00 100%);
+    border-radius: 10px;
+}

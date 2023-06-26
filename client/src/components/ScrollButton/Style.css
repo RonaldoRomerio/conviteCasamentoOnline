@@ -1,0 +1,30 @@
+.clickScroll span{
+    width: 10px;
+    height: 60px;
+    background-image: linear-gradient(270deg, #7c5d00 0, #b29200 25%, #edcf0c 50%, #b29200 75%, #7c5d00 100%);
+    border-radius: 5px;
+    margin: 17px;
+    animation: move 1.1s infinite ease-in-out;
+}
+.clickScroll span:nth-of-type(1){
+transform: rotate(-60deg);
+box-shadow: 5px 1px 5px rgb(133, 133, 133);
+}
+.clickScroll span:nth-of-type(2){
+transform: rotate(60deg);
+box-shadow: -3px -7px 5px rgb(133, 133, 133);
+}
+.clickScroll{
+width: 100%;
+height: 10vh;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+}
+@keyframes move{
+    0%{margin-top: 0;}
+    50%{margin-top: 20px;}
+    100%{margin-top: 0;}
+}
+

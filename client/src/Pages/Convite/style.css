@@ -1,14 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital@1&family=Great+Vibes&display=swap');
+div{scroll-behavior: smooth;}
 
-#telaConvite{
-  background-color: rgba(219, 245, 219, 0.3);
-  height: 300vh;
+.telaConvite{
+  height: 101vh;
+  width: 99vw;
   display: flex;
-  align-items: center;
   flex-direction: column;
-  padding: 15px;
+  justify-content: center;
+  padding: 5px;
+  background: url(../../assets/backgroud.jpg);
+  background-position: 30% 45%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
 }
-.LetraEscrita{
+.letraEscrita{
   font-family: 'Great Vibes', cursive;
   font-size: 2.5em;
 }
@@ -28,13 +35,12 @@ p{
 }
 .botao{
   margin: 30px;
-
 }
 .botao p{
   font-family: 'Bodoni Moda', serif;
   font-size: 1em;
 }
-Button{
+.botao Button{
   height: 80px;
   width: 80px;
   border-radius: 40px;
@@ -46,20 +52,22 @@ footer{
   margin-top: 30px;
 }
 #dataEvento{
-  height: 100vh;
+  height: 80vh;
   display: flex;
   justify-content: center;
   flex-direction: column;
 }
 #mensagemConvidado{
-  height: 100vh;
+  height: 90vh;
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
 }
 #botoesAcao{
-  height: 100vh;
+  height: 90vh;
   display: flex;
   justify-content: center;
   flex-direction: column;
 }
+
