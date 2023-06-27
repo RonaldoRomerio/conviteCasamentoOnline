@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/RonaldoRomerio/conviteCasamentoOnline/issues"
   },
-  "homepage": "https://github.com/RonaldoRomerio/conviteCasamentoOnline#readme"
+  "homepage": "https://github.com/RonaldoRomerio/conviteCasamentoOnline#readme",
+  "dependencies": {
+    "sweetalert2": "^11.7.12"
+  }
 }
