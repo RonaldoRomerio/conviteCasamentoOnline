@@ -1,3 +1,118 @@
 .App {
   text-align: center;
 }
+form{
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+}
+.cl1{
+  grid-column: span 1;
+  align-self: stretch;
+}
+.cl2{
+  grid-column: span 2;
+  align-self: stretch;
+}
+.cl3{
+  grid-column: span 3;
+  align-self: stretch;
+}
+.cl4{
+  grid-column: span 4;
+  align-self: stretch;
+}
+.cl5{
+  grid-column: span 5;
+  align-self: stretch;
+}
+.cl6{
+  grid-column: span 6;
+  align-self: stretch;
+}
+.cl7{
+  grid-column: span 7;
+  align-self: stretch;
+}
+.cl8{
+  grid-column: span 8;
+  align-self: stretch;
+}
+.cl9{
+  grid-column: span 9;
+  align-self: stretch;
+}
+.cl10{
+  grid-column: span 10;
+  align-self: stretch;
+}
+.inputForm {
+  position: relative;
+  margin-left: 2px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  -webkit-box-shadow: 1px 29px 57px -19px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 1px 29px 57px -19px rgba(0, 0, 0, 0.75);
+  box-shadow: 1px 29px 57px -19px rgba(0, 0, 0, 0.75);
+}
+
+.inputForm input {
+  width: 98%;
+  padding: 5px 0;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 2px solid #fff;
+  outline: none;
+  background: transparent;
+  margin: 5px;
+}
+
+.inputForm label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  pointer-events: none;
+  transition: .5s;
+  font-weight: bolder;
+  margin-right: 5px;
+}
+
+.inputForm input:focus~label,
+.inputForm input:valid~label {
+  top: -20px;
+  left: 0;
+  color: #fff;
+  font-size: 12px;
+}
+.tituloForm{
+  color: white;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.content {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.form {
+  width: 90%;
+  background-color: #82CD47;
+  border-radius: 5px;
+  padding: 10px;
+}
+.list{
+  width: 90%;
+}
+.list tr{
+  border-bottom: 1px solid #82CD47;
+}
+.buttonForm{
+  width: 100%;
+}

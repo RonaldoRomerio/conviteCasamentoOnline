@@ -5,14 +5,16 @@ export default function Login() {
     return (
         <div id='backgroundLogin'>
             <div id='caixaLogin'>
-                <div className='inputLogin'>
-                    <input type="text" name="login" required></input>
-                    <label>Login</label>
-                </div>
-                <div className='inputLogin'>
-                    <input type="password" name="senha" required></input>
-                    <label>senha</label>
-                </div>
+                <form>
+                    <div className='inputLogin cl10'>
+                        <input type="text" name="login" required></input>
+                        <label>Login</label>
+                    </div>
+                    <div className='inputLogin cl10'>
+                        <input type="password" name="senha" required></input>
+                        <label>senha</label>
+                    </div>
+                </form>
                 <Button color="success" outline className='buttonLogin'>
                     Entrar
                 </Button>
