@@ -1,0 +1,81 @@
+.fab-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+.fab-input {
+    display: none;
+}
+
+.fab-button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #82CD47;
+    color: white;
+    font-size: 24px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    /* Estilos adicionais */
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.fab-button:hover {
+    background-color: #379237;
+}
+
+.fab-button:active {
+    background-color: #379237;
+}
+
+#galeriaFotos{
+    display: flex;
+    margin: 10px;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+@media (max-width: 700px){
+    #galeriaFotos{
+        display: flex;
+        margin: 10px;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+  }
+#galeriaFotos img{
+    width: 250px;
+    height: 250px;
+    margin: 20px;
+    -webkit-box-shadow: 10px 10px 19px -5px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 19px -5px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 19px -5px rgba(0,0,0,0.75);
+}
+#galeriaFotos div{
+    width: 250px;
+    height: 250px;
+    margin: 20px;
+}
+.opcoesFoto{
+    background-color: rgba(0, 0, 0, 0.0);
+    position: absolute;
+    width: 100%;
+}
+.opcoesFoto svg{
+    display: none;
+}
+.opcoesFoto:hover svg{
+    display: block;
+    margin: 5px;
+    float: right;
+    cursor: pointer;
+}
+.opcoesFoto:hover{
+    display: block;
+    background-color: rgba(0, 0, 0, 0.7);
+}
