@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext, useState} from 'react';
 import './Style.css';
 import ScrollButton from '../../components/ScrollButton'
 import { BsCheckAll, BsBox2Heart, BsPinMap } from "react-icons/bs";
@@ -7,7 +7,8 @@ import LinhaDestaque from '../../components/LinhaDestaque';
 import { SwalContext } from '../../Context/SwalContext';
 import { useHref } from 'react-router-dom';
 import { db } from '../../service/firebase';
-import { collection, doc, getDocs, getDoc } from 'firebase/firestore';
+import { collection, doc, getDocs, getDoc, setDoc } from 'firebase/firestore';
+import { retornaMesPt, diaDaSemanaPt } from '../../util/TraduzData';  
 export default function Convite() {
 
     const { swalAlert, swalToast } = useContext(SwalContext);
@@ -23,19 +24,36 @@ export default function Convite() {
     }, []);
 
     async function capturaInformacoesDoConvite() {
-        const convidadosBusca = await getDoc(doc(db, "usuarios", caminho[2], "convidados", caminho[3],));
+        const nomeDocasalBusca = await getDoc(doc(db, "usuarios", caminho[2]));
+        const nomeDoCasal = nomeDocasalBusca.data().nomeCasal;
+
+        const convidadosBusca = await getDoc(doc(db, "usuarios", caminho[2], "convidados", caminho[3]));
         const nomeDosConvidados = convidadosBusca.data().convidados;
+
         const dataBusca = await getDocs(collection(db, "usuarios", caminho[2], "datas"));
         let dataDaCerimonia = '';
-        dataBusca.forEach((doc) => {dataDaCerimonia = doc.data().dataCerimonia});
+        dataBusca.forEach((doc) => {dataDaCerimonia = doc.data().dataEvento + "T" + doc.data().horaEvento});
+        
         const localBusca = await getDocs(collection(db, "usuarios", caminho[2], "endereco"));
         let EnderecoDaCerimonia = '';
-        localBusca.forEach((doc) => {EnderecoDaCerimonia = doc.data().enderecoCerimonia});
+        localBusca.forEach((doc) => {EnderecoDaCerimonia = doc.data().urlEndereco});
         setInfoConvite({
+            "nomeDoCasal": nomeDoCasal,
             "convidados": nomeDosConvidados,
             "dataDaCerimonia" : dataDaCerimonia,
             "endereco": EnderecoDaCerimonia
         })
+    }
+
+    async function confirmaPresenca(){
+        try{
+            await setDoc(doc(db, "usuarios", caminho[2], "convidados", caminho[3]), {
+                "confirmacao": true,
+            }, {merge: true});
+            swalAlert('Presença confirmada', 'Sua presença já foi confirmada, aguarde para mais informações', 'success');
+        } catch(e){
+            swalToast('error', e);
+        }
     }
 
 if (!isDesktop) {
@@ -43,7 +61,7 @@ if (!isDesktop) {
         <div id="telaConvite">
             <div className='telaConvite' id='mensagem'>
                 <div id="mensagemConvidado">
-                    <p className='letraEscrita'> Samantha e Ronaldo</p>
+                    <p className='letraEscrita'> {infoConvite.nomeDoCasal}</p>
                     <p>convidam</p>
                     <p className='letraEscrita'>{infoConvite.convidados}</p>
                     <p className='linha' />
@@ -55,18 +73,24 @@ if (!isDesktop) {
             <div className='telaConvite' id='data'>
                 <ScrollButton roda={1} referencia={'#mensagem'} />
                 <div id="dataEvento">
-                    <p>Sábado</p>
-                    <LinhaDestaque><p className='letraEscrita'>20</p></LinhaDestaque>
-                    <p>Janeiro</p>
-                    <p className='letraEscrita'>19:00</p>
+                    <p>{diaDaSemanaPt(new Date(infoConvite.dataDaCerimonia).getDay())}</p>
+                    <LinhaDestaque>
+                        <p className='letraEscrita'>
+                            {new Date(infoConvite.dataDaCerimonia).getDate()}
+                        </p>
+                    </LinhaDestaque>
+                    <p>{retornaMesPt(new Date(infoConvite.dataDaCerimonia).getMonth())}</p>
+                    <p className='letraEscrita'>
+                        {new Date(infoConvite.dataDaCerimonia).getHours()} : {new Date(infoConvite.dataDaCerimonia).getMinutes().toString().padStart(2,"0")}
+                    </p>
                 </div>
                 <ScrollButton referencia={'#botoes'} />
             </div>
             <div className='telaConvite' id='botoes'>
                 <ScrollButton roda={1} referencia={'#data'} />
                 <div id="botoesAcao">
-                    <div className='botao'>
-                        <button><BsCheckAll size={25} /></button>
+                    <div className='botao' style={{display: infoConvite.confirmacao ? "none" : "block"}}>
+                        <button onClick={() => confirmaPresenca()}><BsCheckAll size={25} /></button>
                         <p className='textoBotao'>Confirmação</p>
                     </div>
                     <div className='botao'>

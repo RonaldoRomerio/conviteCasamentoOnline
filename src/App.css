@@ -137,6 +137,23 @@ form{
   background-color: transparent;
   border: none;
 }
+.inputFormSelect select {
+  width: 98%;
+  padding: 5px 0;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 2px solid #fff;
+  outline: none;
+  background: transparent;
+  margin: 5px;
+}
+.inputFormSelect option {
+  background-color: #82CD47;
+  height: 30px;
+}
+
 @media (max-width: 1100px){
   .cl1, .cl2, .cl3, .cl4, .cl5, .cl6, .cl7, .cl8, .cl9, .cl10, .cl11{
     grid-column: span 12;
@@ -177,4 +194,7 @@ form{
     border: none;
     margin-left: 5px;
   }
+}
+.teste{
+  background: #82CD47;
 }

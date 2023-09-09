@@ -21,12 +21,14 @@ export default function Convidados() {
     try {
       const docRef = await addDoc(collection(db, "usuarios", user.uid, "convidados"), {
         "convidados": data.convidados,
-        "telefone": data.telefone
+        "telefone": data.telefone,
+        "confirmacao": false
       });
       setLstConvidados([{
         "id" : docRef.id,
         "convidados": data.convidados,
-        "telefone": data.telefone
+        "telefone": data.telefone,
+        "confirmacao": false
       },...lstConvidados])
       reset();
       swalToast('success', 'convidados Inseridos com Sucesso');
@@ -46,7 +48,8 @@ export default function Convidados() {
         arrayDoc.push({
           "id" : doc.id,
           "convidados" : doc.data().convidados,
-          "telefone" : doc.data().telefone
+          "telefone" : doc.data().telefone,
+          "confirmacao" : doc.data().confirmacao
         })
       });
       setLstConvidados(arrayDoc)
@@ -80,11 +83,11 @@ export default function Convidados() {
           <div className='tituloForm'><span><BsFillPlusCircleFill size={15} color={'#fff'} /> Adicionar convidados</span></div>
           <Form ref={formRef} onSubmit={inserirConvidados}>
             <div className='inputForm cl9' >
-              <Input type="text" nome="convidados" required></Input>
+              <Input type="text" nome="convidados"  required></Input>
               <label>Nome dos convidados no convite</label>
             </div>
             <div className='inputForm cl2'>
-              <Input type="text" nome="telefone" required></Input>
+              <Input type="text" nome="telefone" maxlength="11" required></Input>
               <label>Telefone para contato</label>
             </div>
             <div className='inputForm cl1'>
@@ -108,6 +111,9 @@ export default function Convidados() {
                   Telefone
                 </th>
                 <th>
+                  Confirmação
+                </th>
+                <th>
                   Ações
                 </th>
               </tr>
@@ -124,6 +130,9 @@ export default function Convidados() {
                     </td>
                     <td data-label="Telefone">
                       {convidado.telefone}
+                    </td>
+                    <td data-label="Confirmação">
+                      {convidado.confirmacao ? "Confirmado" : "Aguardando"}
                     </td>
                     <td data-label="Ações">
                       <div className='botaoLista'>

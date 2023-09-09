@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './style.css';
 import {Link} from 'react-router-dom';
-import {BsFillCalendarEventFill, BsFillPinMapFill, BsPerson, BsFillGrid1X2Fill, BsGrid3X2Gap, BsFillHouseDoorFill} from "react-icons/bs";
+import {BsFillCalendarEventFill, BsFillPinMapFill, BsPerson, BsFillGrid1X2Fill, BsGrid3X2Gap, BsCashCoin, BsFillGearFill} from "react-icons/bs";
 export default function NavBar() {
     const [mostraItens, setMostraItens] = useState(true);
     var largura = window.screen.width;
@@ -12,11 +12,12 @@ export default function NavBar() {
                                         display: mostraItens && largura < 700 ? 'none' : 'flex',
                                         height: mostraItens && largura < 700 ? '0' : '100%'
                                     }}>
-                <Link to={'/dashboard'} className='navLink'> <BsFillHouseDoorFill size={20}/> <span>DASHBOARD</span></Link>
+                <Link to={'/Configuracao'} className='navLink'> <BsFillGearFill size={20}/> <span>CONFIGURACAO</span></Link>
                 <Link to={'/convidados'} className='navLink'> <BsPerson size={20}/> <span>CONVIDADOS</span></Link>
                 <Link to={'/endereco'} className='navLink'> <BsFillPinMapFill size={15}/> <span>LOCAIS</span></Link>
                 <Link to={'/datas'} className='navLink'> <BsFillCalendarEventFill size={15}/> <span>DATAS</span></Link>
                 <Link to={'/galeria'} className='navLink'> <BsFillGrid1X2Fill size={15}/> <span>GALERIA</span></Link>
+                {/*<Link to={'/financeiro'} className='navLink'> <BsCashCoin size={15}/> <span>FINANCEIRO</span></Link>*/}
             </div>
         </div>
     );

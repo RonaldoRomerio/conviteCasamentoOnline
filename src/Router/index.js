@@ -10,7 +10,8 @@ import Datas from '../Pages/Datas'
 import Galeria from '../Pages/Galeria'
 import SwalProviderContext from '../Context/SwalContext';
 import AuthProviderContext from '../Context/AuthContext';
-import Dashboard from '../Pages/Dashboard';
+import Configuracao from '../Pages/Configuracao';
+import Financeiro from '../Pages/Financeiro';
 //pages
 
 export default function Router() {
@@ -26,7 +27,8 @@ export default function Router() {
                         <Route exact path='/Endereco' element={<AuthRoute component={<Endereco />} />} />
                         <Route exact path='/datas' element={<AuthRoute component={<Datas />} />} />
                         <Route exact path='/galeria' element={<AuthRoute component={<Galeria />} />} />
-                        <Route exact path='/dashboard' element={<AuthRoute component={<Dashboard />} />} />
+                        <Route exact path='/Configuracao' element={<AuthRoute component={<Configuracao />} />} />
+                        {/*<Route exact path='/Financeiro' element={<AuthRoute component={<Financeiro />} />} />*/}
                     </Switch>'
                 </AuthProviderContext>
             </SwalProviderContext>

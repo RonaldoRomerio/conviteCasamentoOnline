@@ -4,16 +4,18 @@ import './style.css';
 import { BsFillPlusCircleFill, BsWhatsapp, BsXCircle } from "react-icons/bs";
 import { Table, Button } from 'reactstrap';
 import { db } from '../../service/firebase';
-import {doc, setDoc } from 'firebase/firestore';
+import {doc, setDoc, getDoc } from 'firebase/firestore';
 import Input from '../../components/Input'
 import { Form } from '@unform/web';
 import { AuthContext } from '../../Context/AuthContext';
 import { SwalContext } from '../../Context/SwalContext';
 
-export default function Dashboard() {
+export default function Configuracao() {
 
     const { user } = useContext(AuthContext);
     const { swalConfirm, swalToast } = useContext(SwalContext);
+    
+    const formRef = useRef(null);
 
     async function salvarNomeCasal(data, { reset }) {
         try {
@@ -29,12 +31,12 @@ export default function Dashboard() {
 
     useEffect(() => {
         async function recuperarDadosDaDashboard() {
-
+            const convidadosBusca = await getDoc(doc(db, "usuarios",  user.uid));
+            formRef.current.setData(convidadosBusca.data());
         }
         recuperarDadosDaDashboard();
     }, [])
 
-    const formRef = useRef(null);
 
     return (
         <div>
@@ -43,7 +45,7 @@ export default function Dashboard() {
                 <div className='form'>
                     <Form ref={formRef} onSubmit={salvarNomeCasal}>
                         <div className='inputForm cl10' >
-                            <Input type="text" nome="convidados" required></Input>
+                            <Input type="text" nome="nomeCasal" required></Input>
                             <label>Nome do casal para o convite</label>
                         </div>
                         <div className='inputForm cl2'>

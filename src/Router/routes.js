@@ -9,12 +9,6 @@ export default function AuthRoute({component: Component}){
 
     const{signed} = useContext(AuthContext);
 
-    const loading = false;
-    if(loading){
-        return(
-            <div></div>
-        )
-    }
     if(!signed)
         return <Login/>
     if(signed)

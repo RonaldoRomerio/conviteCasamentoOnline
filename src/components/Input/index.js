@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useField } from '@unform/core';
 
-export default function InputUnform({nome, ...rest}) {
+export default function InputUnform({nome, tipo, children, ...rest}) {
     const refInput = useRef(null);
     const { fieldName, registerField, defaultValue, error } = useField(nome)
     useEffect(() => {
@@ -11,7 +11,16 @@ export default function InputUnform({nome, ...rest}) {
             path: 'value'
         })
     }, [fieldName, registerField])
-    return (
-        <input ref={refInput} defaultValue={defaultValue} {...rest} />
-    );
+    if(tipo === 'select'){
+        return (
+            <select ref={refInput} {...rest}>
+                {children}
+            </select>
+        );
+    }else{
+        return (
+            <input ref={refInput} defaultValue={defaultValue} {...rest} />
+        );
+    }
+
 }
