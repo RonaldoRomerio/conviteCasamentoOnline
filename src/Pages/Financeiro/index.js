@@ -74,6 +74,7 @@ export default function Financeiro() {
 
     const valoresMovimentacoes = useMemo(() => calculaValores())
 
+    function calculaValores(){}
     const formRef = useRef(null);
     return (
         <div>
