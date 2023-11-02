@@ -8,58 +8,28 @@ import { addDoc, collection, getDocs, deleteDoc, doc } from 'firebase/firestore'
 import Input from '../../components/Input'
 import { AuthContext } from '../../Context/AuthContext';
 import { SwalContext } from '../../Context/SwalContext';
+
+import useFirestoreHook from '../../util/FirestoreHook';
 export default function Endereco() {
 
     const { user } = useContext(AuthContext);
+    const [lstEnderecos, carregaDados, addDocumento, removeDocumento] = useFirestoreHook(`usuarios/${user.uid}/endereco`);
     const { swalAlert, swalToast } = useContext(SwalContext);
 
-    const [lstEnderecos, setlstEnderecos] = useState([]);
-
     useEffect(() => {
-        async function recuperarEndereco() {
+        carregaDados()
+    },[])
 
-            let arrayDoc = [];
-
-            const enderecos = await getDocs(collection(db, "usuarios", user.uid, "endereco"));
-            enderecos.forEach((doc) => {
-                arrayDoc.push({
-                    "id": doc.id,
-                    "nomeLocal": doc.data().nomeLocal,
-                    "urlEndereco": doc.data().urlEndereco
-                })
-            });
-            setlstEnderecos(arrayDoc);
-        }
-        recuperarEndereco();
-    }, [])
-
-
-    async function inserirEndereco(data, reset) {
-        try {
-            const docRef = await addDoc(collection(db, "usuarios", user.uid, "endereco"), {
+    function inserirEndereco(data, {reset}) {
+            let infoEndereco = {
                 "nomeLocal": data.nomeLocal,
                 "urlEndereco": data.urlEndereco
-            });
-            setlstEnderecos([{
-                "id": docRef.id,
-                "nomeLocal": data.nomeLocal,
-                "urlEndereco": data.urlEndereco
-            }, ...lstEnderecos])
-            reset()
-            swalToast('success', 'endereço Inserido com Sucesso');
-        } catch (e) {
-            console.error("Error adding document: ", e);
-        }
+            }
+            addDocumento(infoEndereco, reset);
     }
 
-    async function deletarEnderecos(id) {
-        try {
-            await deleteDoc(doc(db, "usuarios", user.uid, "endereco", id));
-            setlstEnderecos(lstEnderecos.filter(e => e.id != id))
-        } catch (e) {
-            console.error("Error adding document: ", e)
-        }
-
+    function deletarEnderecos(id) {
+            removeDocumento(id);
     }
     const formRef = useRef(null);
 
@@ -107,15 +77,15 @@ export default function Endereco() {
                         <tbody>
                             {lstEnderecos != null && lstEnderecos.length > 0 ?
                                 lstEnderecos.map((endereco, index) => (
-                                    <tr key={endereco.id}>
+                                    <tr key={endereco.data.id}>
                                         <th data-label="#" scope="row">
                                             {index}
                                         </th>
                                         <td data-label="Nome do local">
-                                            {endereco.nomeLocal}
+                                            {endereco.data.nomeLocal}
                                         </td>
                                         <td data-label="link do maps">
-                                            <a className='linkMaps' href={endereco.urlEndereco} target="_blank">Clique aqui para ver o local</a>
+                                            <a className='linkMaps' href={endereco.data.urlEndereco} target="_blank">Clique aqui para ver o local</a>
                                         </td>
                                         <td data-label="Ações">
                                             <div className='botaoLista'>
