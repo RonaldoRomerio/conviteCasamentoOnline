@@ -12,7 +12,7 @@ export default function Convidados() {
 
   const {user} = useContext(AuthContext);
 
-  const [lstConvidados, carregaDados, addDocumento, removeDocumento] = useFirestoreHook(`usuarios/${user.uid}/convidados`);
+  const [lstConvidados, carregaDados, addDocumento, removeDocumento] = useFirestoreHook(`usuarios/${user.uid}/convidados`, 'convidado');
   
   useEffect(() => {
     carregaDados();

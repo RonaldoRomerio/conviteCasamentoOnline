@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import { db } from '../service/firebase';
 import { addDoc, getDocs, deleteDoc, collection, doc } from 'firebase/firestore';
 import { SwalContext } from '../Context/SwalContext';
-export default function FirestoreHook(referencia) {
+export default function FirestoreHook(referencia, entidade) {
     const { swalConfirm, swalToast } = useContext(SwalContext);
     const [dados, setDados] = useState();
 
@@ -35,7 +35,7 @@ const addDocumento = async (object, reset) => {
         setDados([{ "id": docRef.id,
                     "data": object}, 
                     ...dados]);
-        swalToast('success', 'convidados Inseridos com Sucesso');
+        swalToast('success', `${entidade} Inserido(a) com Sucesso`);
         reset();
     } catch (e) {
         swalToast('error', e);
@@ -44,7 +44,7 @@ const addDocumento = async (object, reset) => {
 }
 const removeDocumento = (id) => {
     try {
-        swalConfirm("Deseja realmente excluir esses convidados? Essa ação não é reversível")
+        swalConfirm(`Deseja realmente excluir esse(a) ${entidade}? Essa ação não é reversível`)
             .then(async (result) => {
                 if (result.isConfirmed) {
                     await deleteDoc(doc(db,referencia, id));

@@ -9,7 +9,7 @@ import useFirestoreHook from '../../util/FirestoreHook';
 export default function Endereco() {
 
     const { user } = useContext(AuthContext);
-    const [lstDatas, carregaDados, addDocumento, removeDocumento] = useFirestoreHook(`usuarios/${user.uid}/datas`);
+    const [lstDatas, carregaDados, addDocumento, removeDocumento] = useFirestoreHook(`usuarios/${user.uid}/datas`, 'data');
 
     useEffect(() => {
         carregaDados()
