@@ -3,18 +3,14 @@ import NavBar from '../../components/NavBar';
 import { BsFillPinMapFill, BsXCircle } from "react-icons/bs";
 import { Button, Table } from 'reactstrap';
 import { Form } from '@unform/web';
-import { db } from '../../service/firebase';
-import { addDoc, collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import Input from '../../components/Input'
 import { AuthContext } from '../../Context/AuthContext';
-import { SwalContext } from '../../Context/SwalContext';
 
 import useFirestoreHook from '../../util/FirestoreHook';
 export default function Endereco() {
 
     const { user } = useContext(AuthContext);
     const [lstEnderecos, carregaDados, addDocumento, removeDocumento] = useFirestoreHook(`usuarios/${user.uid}/endereco`);
-    const { swalAlert, swalToast } = useContext(SwalContext);
 
     useEffect(() => {
         carregaDados()
