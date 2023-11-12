@@ -108,7 +108,7 @@
         align-items: center;
         z-index: 999999;
         position: fixed;
-        left: -100%;
+        left: -150%;
         transition: 0.5s;
     }
     .navBar.active {
@@ -125,10 +125,11 @@
         display: block;
         padding: 10px;
         color: #FFF;
-        text-align: end;
+        align-self: flex-end;
     }
     .navLink{
         margin-left: 0;
+        width: 100%;
     }
     .navLink span{
         display: inline;
