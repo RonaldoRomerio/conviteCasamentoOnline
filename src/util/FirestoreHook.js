@@ -1,19 +1,16 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useMemo } from 'react';
 import { db } from '../service/firebase';
 import { addDoc, getDocs, deleteDoc, collection, doc } from 'firebase/firestore';
 import { SwalContext } from '../Context/SwalContext';
 export default function FirestoreHook(referencia, entidade) {
     const { swalConfirm, swalToast } = useContext(SwalContext);
-    const [dados, setDados] = useState();
-
+    const [dados, setDados] = useState([]);
+    const qtdDados = useMemo(() => dados.length, [dados])
     const carregaDados = async () => {
         let arrayDoc = [];
-        
-        console.log(referencia.toString())
         try{
             const enderecos = await getDocs(collection(db, referencia.toString()));
             enderecos.forEach((doc) => {
-                console.log(doc.data())
                     arrayDoc.push({
                         "id" : doc.id,
                         data: doc.data()
@@ -22,16 +19,12 @@ export default function FirestoreHook(referencia, entidade) {
             setDados(arrayDoc);
         } catch(e){
             swalToast('error', e);
-            console.error("Error adding document: ", e);
         }
-        
-        
     }
 
 const addDocumento = async (object, reset) => {
     try {
         const docRef = await addDoc(collection(db, referencia), object);
-        console.log(docRef);
         setDados([{ "id": docRef.id,
                     "data": object}, 
                     ...dados]);
@@ -39,7 +32,6 @@ const addDocumento = async (object, reset) => {
         reset();
     } catch (e) {
         swalToast('error', e);
-        console.error("Error adding document: ", e);
     }
 }
 const removeDocumento = (id) => {
@@ -54,9 +46,9 @@ const removeDocumento = (id) => {
                 }
             })
     } catch (e) {
-        console.error("Error adding document: ", e)
+        swalToast('error', e);
     }
 }
 
-return [dados, carregaDados, addDocumento, removeDocumento];
+return [dados, carregaDados, addDocumento, removeDocumento, qtdDados];
 }

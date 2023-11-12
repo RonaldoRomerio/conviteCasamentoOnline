@@ -1,0 +1,10 @@
+.relatorioFinanceiro{
+    width: 90%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: end;
+}
+.relatorioFinanceiro span{
+    padding-left: 15px;
+    font-weight: 600;
+}

@@ -1,85 +1,54 @@
 import { useRef, useState, useEffect, useContext, useMemo } from 'react';
-import NavBar from '../../components/NavBar';
+import PaginaBase from '../PaginaBase';
+import './style.css';
 import { BsFillPlusCircleFill, BsWhatsapp, BsXCircle } from "react-icons/bs";
 import { Table, Button } from 'reactstrap';
-import { db } from '../../service/firebase';
-import { addDoc, collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import Input from '../../components/Input'
 import { Form } from '@unform/web';
 import { AuthContext } from '../../Context/AuthContext';
-import { SwalContext } from '../../Context/SwalContext';
 import { Currency } from '../../util/Mascaras';
+import useFirestoreHook from '../../util/FirestoreHook';
+
 export default function Financeiro() {
     const { user } = useContext(AuthContext);
-    const { swalConfirm, swalToast } = useContext(SwalContext);
-
-    const [lstFinanceiro, setLstFinanceiro] = useState([]);
-
+    const formRef = useRef(null);
+    const [lstFinanceiro, carregaDados, addDocumento, removeDocumento, qtdDados] = useFirestoreHook(`usuarios/${user.uid}/financeiro`, 'Dado financeiro');
+    
     async function inserirFinanceiro(data, { reset }) {
         let dataAtual = new Date();
-        console.log(data.valor.replace(",","."));
-        let dado = {'movimentacao' : data.movimentacao,
+        let infoFinanceiro = {'movimentacao' : data.movimentacao,
                     'data': dataAtual.toLocaleDateString(),
                     'valor': Number(data.valor.replace(",",".").replace("R$", "")),
                     'tipo': data.tipo}
-        try {
-            const docRef = await addDoc(collection(db, "usuarios", user.uid, "financeiro"), dado);
-            dado.id = docRef.id
-            console.log(dado)
-            setLstFinanceiro([dado, ...lstFinanceiro])
-            reset();
-            swalToast('success', 'Financeiro Inseridos com Sucesso');
-        } catch (e) {
-            swalToast('error', e);
-            console.error("Error adding document: ", e);
-        }
+        addDocumento(infoFinanceiro,reset);
     }
 
     useEffect(() => {
-        async function recuperarFinanceiro() {
-
-            let arrayDoc = [];
-
-            const enderecos = await getDocs(collection(db, "usuarios", user.uid, "financeiro"));
-            enderecos.forEach((doc) => {
-                console.log(doc);
-                arrayDoc.push({
-                    'id': doc.id,
-                    'movimentacao' : doc.data().movimentacao,
-                    'data': doc.data().data,
-                    'valor':doc.data().valor,
-                    'tipo': doc.data().tipo
-                })
-            });
-            setLstFinanceiro(arrayDoc)
-        }
-        recuperarFinanceiro();
+        carregaDados();
     }, [])
 
     function removerMovimentacao(id) {
-        try {
-            swalConfirm("Deseja realmente excluir esses Financeiro? Essa ação não é reversível")
-                .then(async (result) => {
-                    if (result.isConfirmed) {
-                        await deleteDoc(doc(db, "usuarios", user.uid, "financeiro", id));
-                        setLstFinanceiro(lstFinanceiro.filter(c => c.id != id))
-                    } else {
-                        return;
-                    }
-                })
-        } catch (e) {
-            console.error("Error adding document: ", e)
-        }
+        removeDocumento(id);
     }
 
-    const valoresMovimentacoes = useMemo(() => calculaValores())
+    const valorPago = useMemo(() => calculaValor('P') , [lstFinanceiro])
 
-    function calculaValores(){}
-    const formRef = useRef(null);
+    const valorDevido = useMemo(() => calculaValor('D') , [lstFinanceiro])
+    
+
+    function calculaValor(tipo){
+        let ValoresPagos = lstFinanceiro.filter(e => e.data.tipo === tipo);
+        let valorTotal = 0;
+        console.log(ValoresPagos);
+        console.log(lstFinanceiro);
+        ValoresPagos.forEach(valor => {
+            valorTotal += valor.data.valor;
+        });
+
+        return valorTotal;
+    }
     return (
-        <div>
-            <NavBar />
-            <div className="content">
+        <PaginaBase>
                 <div className='form'>
                     <div className='tituloForm'><span><BsFillPlusCircleFill size={15} color={'#fff'} /> Adicionar Financeiro</span></div>
                     <Form ref={formRef} onSubmit={inserirFinanceiro}>
@@ -104,8 +73,11 @@ export default function Financeiro() {
                         </div>
                     </Form>
                 </div>
+                <div className='relatorioFinanceiro'>
+                    <span>Valor Pago: {valorPago} </span> <span>Valor à pagar: {valorPago >= valorDevido ? 0 :  valorDevido - valorPago } </span>
+                </div>
                 <div className='list'>
-                    <Table>
+                    <Table responsive hover>
                         <thead>
                             <tr>
                                 <th>
@@ -128,18 +100,18 @@ export default function Financeiro() {
                         <tbody>
                             {lstFinanceiro != null && lstFinanceiro.length > 0 ?
                                 lstFinanceiro.map((convidado, index) => (
-                                    <tr key={convidado.id} className='teste'>
+                                    <tr key={convidado.id} className={convidado.data.tipo === "P" ? 'table-success' : 'table-danger'}>
                                         <th data-label="#" scope="row">
                                             {index}
                                         </th>
                                         <td data-label="Movimentação">
-                                            {convidado.movimentacao}
+                                            {convidado.data.movimentacao}
                                         </td>
                                         <td data-label="Valor">
-                                            {convidado.valor.toString().replace(".",",")}
+                                            R$ {convidado.data.valor.toString().replace(".",",")}
                                         </td>
-                                        <td data-label="tipo">
-                                            {convidado.tipo === "P" ? 'Pago' : 'À pagar'}
+                                        <td data-label="tipo" >
+                                            {convidado.data.tipo === "P" ? 'Pago' : 'À pagar'}
                                         </td>
                                         <td data-label="Ações">
                                             <div className='botaoLista'>
@@ -154,10 +126,8 @@ export default function Financeiro() {
                                 )
                             }
                         </tbody>
-
                     </Table>
                 </div>
-            </div>
-        </div>
+            </PaginaBase>
     );
 }

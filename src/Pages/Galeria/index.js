@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useContext } from 'react';
-import NavBar from '../../components/NavBar';
+import PaginaBase from '../PaginaBase';
 import './style.css'
 import { storage } from '../../service/firebase';
 import { ref, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
@@ -70,9 +70,7 @@ export default function Galeria() {
         });
     }
     return (
-        <div>
-            <NavBar />
-            <div className="content">
+        <PaginaBase>
                 <div id='galeriaFotos'>
                 {lstFotos != null && lstFotos.length > 0 ?
                 lstFotos.map((foto, index) => (
@@ -85,7 +83,6 @@ export default function Galeria() {
                         )):("")
                 }
                 </div>
-            </div>
             <div className="fab-container">
                     <input
                         type="file"
@@ -96,6 +93,6 @@ export default function Galeria() {
                     />
                     <button className="fab-button" onClick={BuscarFoto}>+</button>
                 </div>
-        </div>
+        </PaginaBase>
     );
 }

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useContext, useState } from 'react';
-import NavBar from '../../components/NavBar';
+import PaginaBase from '../PaginaBase';
 import { BsFillPinMapFill, BsXCircle } from "react-icons/bs";
 import { Button, Table } from 'reactstrap';
 import { Form } from '@unform/web';
@@ -30,9 +30,7 @@ export default function Endereco() {
     const formRef = useRef(null);
 
     return (
-        <div>
-            <NavBar />
-            <div className="content">
+            <PaginaBase>
                 <div className='form'>
                     <div className='tituloForm'><span><BsFillPinMapFill size={15} color={'#fff'} /> Adicionar Local</span></div>
                     <Form ref={formRef} onSubmit={inserirEndereco}>
@@ -53,7 +51,7 @@ export default function Endereco() {
                     </Form>
                 </div>
                 <div className='list'>
-                    <Table responsive>
+                    <Table responsive hover>
                         <thead>
                             <tr>
                                 <th>
@@ -98,7 +96,6 @@ export default function Endereco() {
                         </tbody>
                     </Table>
                 </div>
-            </div>
-        </div>
+            </PaginaBase>
     );
 }

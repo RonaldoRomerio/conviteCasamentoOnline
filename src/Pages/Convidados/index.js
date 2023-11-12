@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect, useContext } from 'react';
-import NavBar from '../../components/NavBar';
-import './style.css';
+import PaginaBase from '../PaginaBase';
 import { BsFillPlusCircleFill, BsWhatsapp, BsXCircle } from "react-icons/bs";
 import { Table, Button } from 'reactstrap';
 import Input from '../../components/Input';
@@ -32,9 +31,7 @@ export default function Convidados() {
   const formRef = useRef(null);
 
   return (
-    <div>
-      <NavBar />
-      <div className="content">
+    <PaginaBase>
         <div className='form'>
           <div className='tituloForm'><span><BsFillPlusCircleFill size={15} color={'#fff'} /> Adicionar convidados</span></div>
           <Form ref={formRef} onSubmit={inserirConvidados}>
@@ -54,7 +51,7 @@ export default function Convidados() {
           </Form>
         </div>
         <div className='list'>
-          <Table responsive>
+          <Table responsive hover>
             <thead>
               <tr>
                 <th>
@@ -108,7 +105,6 @@ export default function Convidados() {
             </tbody>
           </Table>
         </div>
-      </div>
-    </div>
+    </PaginaBase>
   );
 }

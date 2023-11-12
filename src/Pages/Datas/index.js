@@ -1,5 +1,5 @@
 import { useEffect, useRef, useContext, useState } from 'react';
-import NavBar from '../../components/NavBar';
+import PaginaBase from '../PaginaBase';
 import { BsFillCalendarEventFill, BsXCircle } from "react-icons/bs";
 import { Form } from '@unform/web';
 import Input from '../../components/Input'
@@ -29,9 +29,7 @@ export default function Endereco() {
     const formRef = useRef(null);
 
     return (
-        <div>
-            <NavBar />
-            <div className="content">
+            <PaginaBase>
                 <div className='form'>
                     <div className='tituloForm'><span><BsFillCalendarEventFill size={15} color={'#fff'} /> Adicionar Datas</span></div>
                     <Form ref={formRef} onSubmit={inserirDatas}>
@@ -53,7 +51,7 @@ export default function Endereco() {
                     </Form>
                 </div>
                 <div className='list'>
-                    <Table responsive>
+                    <Table responsive hover>
                         <thead>
                             <tr>
                                 <th>
@@ -104,7 +102,6 @@ export default function Endereco() {
                         </tbody>
                     </Table>
                 </div>
-            </div>
-        </div>
+            </PaginaBase>
     );
 }

@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect, useContext } from 'react';
-import NavBar from '../../components/NavBar';
-import './style.css';
+import PaginaBase from '../PaginaBase';
 import { BsFillPlusCircleFill, BsWhatsapp, BsXCircle } from "react-icons/bs";
 import { Table, Button } from 'reactstrap';
 import { db } from '../../service/firebase';
@@ -39,9 +38,7 @@ export default function Configuracao() {
 
 
     return (
-        <div>
-            <NavBar />
-            <div className="content">
+        <PaginaBase>
                 <div className='form'>
                     <Form ref={formRef} onSubmit={salvarNomeCasal}>
                         <div className='inputForm cl10' >
@@ -55,7 +52,6 @@ export default function Configuracao() {
                         </div>
                     </Form>
                 </div>
-            </div>
-        </div>
+        </PaginaBase>
     );
 }

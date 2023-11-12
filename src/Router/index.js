@@ -28,8 +28,8 @@ export default function Router() {
                         <Route exact path='/datas' element={<AuthRoute component={<Datas />} />} />
                         <Route exact path='/galeria' element={<AuthRoute component={<Galeria />} />} />
                         <Route exact path='/Configuracao' element={<AuthRoute component={<Configuracao />} />} />
-                        {/*<Route exact path='/Financeiro' element={<AuthRoute component={<Financeiro />} />} />*/}
-                    </Switch>'
+                        <Route exact path='/Financeiro' element={<AuthRoute component={<Financeiro />} />} />
+                    </Switch>
                 </AuthProviderContext>
             </SwalProviderContext>
         </BrowserRouter>
