@@ -5,7 +5,7 @@ import { Form } from '@unform/web';
 import Input from '../../components/Input'
 import { AuthContext } from '../../Context/AuthContext';
 import { Table, Button } from 'reactstrap';
-import useFirestoreHook from '../../util/FirestoreHook';
+import useFirestoreHook from '../../customHooks/FirestoreHook';
 export default function Endereco() {
 
     const { user } = useContext(AuthContext);
@@ -44,7 +44,7 @@ export default function Endereco() {
                             <Input nome="horaEvento" type="time" required></Input>
                         </div>
                         <div className='inputForm cl1'>
-                            <Button color="light" className='buttonForm'>
+                            <Button outline color="success"  className='buttonForm'>
                                 Salvar
                             </Button>
                         </div>

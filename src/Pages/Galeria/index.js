@@ -7,7 +7,7 @@ import "./style.css"
 import { BsXCircle } from "react-icons/bs";
 import { AuthContext } from '../../Context/AuthContext';
 import { SwalContext } from '../../Context/SwalContext';
-import useFirestoreHook from '../../util/FirestoreHook';
+import useFirestoreHook from '../../customHooks/FirestoreHook';
 export default function Galeria() {
 
     const {user} = useContext(AuthContext);

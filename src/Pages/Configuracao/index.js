@@ -46,7 +46,7 @@ export default function Configuracao() {
                             <label>Nome do casal para o convite</label>
                         </div>
                         <div className='inputForm cl2'>
-                            <Button color="light" className='buttonForm'>
+                            <Button outline color="success" className='buttonForm'>
                                 Salvar
                             </Button>
                         </div>

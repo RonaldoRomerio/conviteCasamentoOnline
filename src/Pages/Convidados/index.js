@@ -1,16 +1,16 @@
 import { useRef, useState, useEffect, useContext } from 'react';
 import PaginaBase from '../PaginaBase';
-import { BsFillPlusCircleFill, BsWhatsapp, BsXCircle } from "react-icons/bs";
+import { BsFillPlusCircleFill, BsWhatsapp, BsXCircle, BsFillPencilFill, BsFillPersonFill } from "react-icons/bs";
 import { Table, Button } from 'reactstrap';
 import Input from '../../components/Input';
 import { Form } from '@unform/web';
 import { AuthContext } from '../../Context/AuthContext';
-import useFirestoreHook from '../../util/FirestoreHook'
+import useFirestoreHook from '../../customHooks/FirestoreHook'
 
 export default function Convidados() {
 
   const {user} = useContext(AuthContext);
-
+  const [abreModal, setAbreModal] = useState(false)
   const [lstConvidados, carregaDados, addDocumento, removeDocumento] = useFirestoreHook(`usuarios/${user.uid}/convidados`, 'convidado');
   
   useEffect(() => {
@@ -27,8 +27,12 @@ export default function Convidados() {
   function removerConvidado(id){
     removeDocumento(id);
   }
+  function editarConvidado(id){
+    
+  }
 
   const formRef = useRef(null);
+  const formRefEdicao = useRef(null);
 
   return (
     <PaginaBase>
@@ -40,11 +44,11 @@ export default function Convidados() {
               <label>Nome dos convidados no convite</label>
             </div>
             <div className='inputForm cl2'>
-              <Input type="text" nome="telefone" maxlength="11" required></Input>
+              <Input type="text" nome="telefone" maxLength="11" required></Input>
               <label>Telefone para contato</label>
             </div>
             <div className='inputForm cl1'>
-              <Button color="light" className='buttonForm'>
+              <Button outline color="success"  className='buttonForm'>
                 Salvar
               </Button>
             </div>
@@ -89,10 +93,12 @@ export default function Convidados() {
                     </td>
                     <td data-label="Ações">
                       <div className='botaoLista'>
-                        <a href={`https://wa.me//55${convidado.data.telefone}?text=http://localhost:3000/convite/${user.uid}/${convidado.data.id}`} target="_blank">
-                          <button><BsWhatsapp color={'green'} size={28}/></button>
+                      <button title="inserir convidados" onClick={() => {setAbreModal(true)}}><BsFillPersonFill color={"blue"} size={28}/></button>
+                        <button title="editar convidado" onClick={() => {setAbreModal(true)}}><BsFillPencilFill color={"orange"} size={28}/></button>
+                        <a href={`https://wa.me//55${convidado.data.telefone}?text=http://localhost:3000/convite/${user.uid}/${convidado.data.id}`} title="Enviar link do convite" target="_blank">
+                          <button title="Enviar link do convite" ><BsWhatsapp color={'green'} size={28}/></button>
                         </a>
-                        <button onClick={() => {removerConvidado(convidado.id)}}><BsXCircle color={"red"} size={28}/></button>
+                        <button title="Excluir convidado" onClick={() => {removerConvidado(convidado.id)}}><BsXCircle color={"red"} size={28}/></button>
                       </div>
                     </td>
                   </tr>
@@ -100,8 +106,7 @@ export default function Convidados() {
                   <tr>
                       <td colSpan={4}> Não há convidados inseridos </td>
                   </tr>
-              )
-            }
+              )}
             </tbody>
           </Table>
         </div>

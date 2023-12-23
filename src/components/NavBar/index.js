@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom';
 import {BsFillCalendarEventFill, BsFillPinMapFill, BsPerson, BsFillGrid1X2Fill, BsGrid3X2Gap, BsCashCoin, BsFillGearFill, BsFillArrowLeftCircleFill} from "react-icons/bs";
 export default function NavBar() {
     const [isOpen, setIsOpen] = useState(false);
-    var largura = window.screen.width;
     return (
         <div>
             <div id="ativaSideBar"><BsGrid3X2Gap onClick={() => (setIsOpen(!isOpen))} size={30}/></div>

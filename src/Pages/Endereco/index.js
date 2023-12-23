@@ -6,7 +6,7 @@ import { Form } from '@unform/web';
 import Input from '../../components/Input'
 import { AuthContext } from '../../Context/AuthContext';
 
-import useFirestoreHook from '../../util/FirestoreHook';
+import useFirestoreHook from '../../customHooks/FirestoreHook';
 export default function Endereco() {
 
     const { user } = useContext(AuthContext);
@@ -44,7 +44,7 @@ export default function Endereco() {
                             <label>Link do maps</label>
                         </div>
                         <div className='inputForm cl1'>
-                            <Button color="light" className='buttonForm'>
+                            <Button outline color="success"  className='buttonForm'>
                                 Salvar
                             </Button>
                         </div>
@@ -71,7 +71,7 @@ export default function Endereco() {
                         <tbody>
                             {lstEnderecos != null && lstEnderecos.length > 0 ?
                                 lstEnderecos.map((endereco, index) => (
-                                    <tr key={endereco.data.id}>
+                                    <tr key={endereco.id}>
                                         <th data-label="#" scope="row">
                                             {index}
                                         </th>

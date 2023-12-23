@@ -54,27 +54,22 @@ form{
   align-self: stretch;
 }
 
-.inputForm {
+.inputForm, .inputFormSelect {
   position: relative;
   margin-left: 2px;
   margin-bottom: 20px;
-  border-radius: 5px;
-  -webkit-box-shadow: 1px 29px 57px -19px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 1px 29px 57px -19px rgba(0, 0, 0, 0.75);
-  box-shadow: 1px 29px 57px -19px rgba(0, 0, 0, 0.75);
 }
 
 .inputForm input {
   width: 98%;
   padding: 5px 0;
-  font-size: 16px;
-  color: #fff;
-  margin-bottom: 30px;
-  border: none;
-  border-bottom: 2px solid #fff;
-  outline: none;
-  background: transparent;
   margin: 5px;
+  font-size: 16px;
+  color: #4CAF50;
+  margin-bottom: 30px;
+  border: 2px solid #4CAF50;
+  outline: none;
+  border-radius: 8px;
 }
 
 .inputForm label {
@@ -83,44 +78,43 @@ form{
   left: 0;
   padding: 10px 0;
   font-size: 16px;
-  color: #fff;
+  color: #4CAF50;
   pointer-events: none;
   transition: .5s;
   font-weight: bolder;
-  margin-right: 5px;
+  margin-left: 12px;
 }
 
 .inputForm input:focus~label,
 .inputForm input:valid~label {
   top: -20px;
   left: 0;
-  color: #fff;
+  color: #4CAF50;
   font-size: 12px;
 }
 .tituloForm{
-  color: white;
+  color: #4CAF50;
   text-transform: uppercase;
   font-weight: 600;
   margin-bottom: 15px;
 }
 .content {
   padding: 15px;
-  width: 95vw;
   margin-top: 5px;
   margin-bottom: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
   background-color: #fff;
   border-top-left-radius: 80px;
   border-bottom-left-radius: 80px;
+  width: 100%;
 }
 
 .form {
   width: 91%;
-  background-color: #4CAF50;
+  border: 2px solid #4CAF50;
   border-radius: 5px;
   padding: 10px;
 }
@@ -143,6 +137,7 @@ form{
 }
 .buttonForm{
   width: 100%;
+  margin-top: 4px;
 }
 .botaoLista{
   display: flex;
@@ -156,21 +151,28 @@ form{
 }
 .inputFormSelect select {
   width: 98%;
-  padding: 5px 0;
   font-size: 16px;
-  color: #fff;
+  color: #4CAF50;
+  font-weight: bolder;
   margin-bottom: 30px;
   border: none;
   border-bottom: 2px solid #fff;
   outline: none;
-  background: transparent;
+  border:2px solid #4CAF50;
+  border-radius: 8px;
+  padding: 5px 0;
   margin: 5px;
+  
 }
 .inputFormSelect option {
-  background-color: #4CAF50;
+  color: #4CAF50;
   height: 30px;
+  text-transform: uppercase;
+  font-weight: bold;
 }
-
+.inputFormSelect option:hover {
+  background-color: #4CAF50;
+}
 @media (max-width: 1100px){
   .cl1, .cl2, .cl3, .cl4, .cl5, .cl6, .cl7, .cl8, .cl9, .cl10, .cl11{
     grid-column: span 12;
@@ -186,6 +188,10 @@ form{
   }
 }
 @media (max-width: 700px){
+  .content{
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
   .list table thead{
     border: none;
     height: 1px;

@@ -1,19 +1,21 @@
 import { useRef, useState, useEffect, useContext, useMemo } from 'react';
 import PaginaBase from '../PaginaBase';
 import './style.css';
-import { BsFillPlusCircleFill, BsWhatsapp, BsXCircle } from "react-icons/bs";
+import { BsFillPlusCircleFill, BsXCircle, BsCheckCircle } from "react-icons/bs";
 import { Table, Button } from 'reactstrap';
 import Input from '../../components/Input'
 import { Form } from '@unform/web';
 import { AuthContext } from '../../Context/AuthContext';
 import { Currency } from '../../util/Mascaras';
-import useFirestoreHook from '../../util/FirestoreHook';
+import useFirestoreHook from '../../customHooks/FirestoreHook';
+import { SwalContext } from '../../Context/SwalContext';
 
 export default function Financeiro() {
     const { user } = useContext(AuthContext);
     const formRef = useRef(null);
-    const [lstFinanceiro, carregaDados, addDocumento, removeDocumento, qtdDados] = useFirestoreHook(`usuarios/${user.uid}/financeiro`, 'Dado financeiro');
-    
+    const [lstFinanceiro, carregaDados, addDocumento, removeDocumento, editaDocumento, editaValor, qtdDados] = useFirestoreHook(`usuarios/${user.uid}/financeiro`, 'Dado financeiro');
+    const { swalConfirm} = useContext(SwalContext);
+
     async function inserirFinanceiro(data, { reset }) {
         let dataAtual = new Date();
         let infoFinanceiro = {'movimentacao' : data.movimentacao,
@@ -29,6 +31,9 @@ export default function Financeiro() {
 
     function removerMovimentacao(id) {
         removeDocumento(id);
+    }
+    function alteraParaPago(id){
+        editaValor(id, {'tipo': 'P'})
     }
 
     const valorPago = useMemo(() => calculaValor('P') , [lstFinanceiro])
@@ -62,19 +67,20 @@ export default function Financeiro() {
                         </div>
                         <div className='inputFormSelect cl2'>
                             <Input nome="tipo" tipo={'select'} required>
+                                <option value=''>Transação</option>
                                 <option value='D'>Á pagar</option>
                                 <option value='P'>Pago</option>
                             </Input>
                         </div>
                         <div className='inputForm cl1'>
-                            <Button color="light" className='buttonForm'>
+                            <Button outline color="success" className='buttonForm'>
                                 Salvar
                             </Button>
                         </div>
                     </Form>
                 </div>
                 <div className='relatorioFinanceiro'>
-                    <span>Valor Pago: {valorPago} </span> <span>Valor à pagar: {valorPago >= valorDevido ? 0 :  valorDevido - valorPago } </span>
+                    <span>Valor Pago: {valorPago} </span> <span>Valor à pagar: {valorDevido} </span>
                 </div>
                 <div className='list'>
                     <Table responsive hover>
@@ -99,23 +105,28 @@ export default function Financeiro() {
                         </thead>
                         <tbody>
                             {lstFinanceiro != null && lstFinanceiro.length > 0 ?
-                                lstFinanceiro.map((convidado, index) => (
-                                    <tr key={convidado.id} className={convidado.data.tipo === "P" ? 'table-success' : 'table-danger'}>
+                                lstFinanceiro.map((financeiro, index) => (
+                                    <tr key={financeiro.id} className={financeiro.data.tipo === "P" ? 'table-success' : 'table-danger'}>
                                         <th data-label="#" scope="row">
                                             {index}
                                         </th>
                                         <td data-label="Movimentação">
-                                            {convidado.data.movimentacao}
+                                            {financeiro.data.movimentacao}
                                         </td>
                                         <td data-label="Valor">
-                                            R$ {convidado.data.valor.toString().replace(".",",")}
+                                            R$ {financeiro.data.valor.toString().replace(".",",")}
                                         </td>
                                         <td data-label="tipo" >
-                                            {convidado.data.tipo === "P" ? 'Pago' : 'À pagar'}
+                                            {financeiro.data.tipo === "P" ? 'Pago' : 'À pagar'}
                                         </td>
                                         <td data-label="Ações">
                                             <div className='botaoLista'>
-                                                <button onClick={() => removerMovimentacao(convidado.id)}><BsXCircle color={"red"} size={28} /></button>
+                                                {financeiro.data.tipo === "P" ? 
+                                                    '' 
+                                                    :
+                                                    <button onClick={() => alteraParaPago(financeiro.id)}><BsCheckCircle color={"green"} size={28} /></button>
+                                                }
+                                                <button onClick={() => removerMovimentacao(financeiro.id)}><BsXCircle color={"red"} size={28} /></button>
                                             </div>
                                         </td>
                                     </tr>
